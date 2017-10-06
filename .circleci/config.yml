@@ -34,4 +34,11 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
         
       # run tests!
-      - run: yarn run test
+      - run: yarn test
+      - deploy:
+          name: Publish NPM
+          command: |
+            if [ ${CIRCLE_TAG+x} ]; then
+              echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+              npm publish
+            fi
