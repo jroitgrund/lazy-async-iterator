@@ -1,5 +1,7 @@
 # lazy-async-iterator
 
+[![CircleCI](https://circleci.com/gh/jroitgrund/lazy-async-iterator.svg?style=svg)](https://circleci.com/gh/jroitgrund/lazy-async-iterator)
+
 Turn a paginated async call into an infinite lazy stream of results:
 
 ```ts
