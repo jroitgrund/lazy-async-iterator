@@ -9,7 +9,8 @@
         "tslint": "tslint 'src/**/*.ts'",
         "tsc": "tsc",
         "jest": "jest",
-        "test": "npm-run-all tsc -p tslint prettier jest"
+        "test": "npm-run-all tsc -p tslint prettier jest",
+        "prepublish": "test"
     },
     "version": "0.0.1",
     "main": "lib/index.js",
