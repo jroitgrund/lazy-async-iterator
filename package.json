@@ -3,18 +3,18 @@
     "description": "Wrap your paged aysnc API in a lazy infinite iterable",
     "author": "jroitgrund",
     "scripts": {
-        "prettier:fix":
-            "find src -name '*.ts' -exec node_modules/.bin/prettier --tab-width 4 --print-width 100 --trailing-comma es5 --write {} +",
-        "prettier":
-            "find src -name '*.ts' -exec node_modules/.bin/prettier --tab-width 4 --print-width 100 --trailing-comma es5 --list-different {} +",
+        "prettier:fix": "find src -name '*.ts' -exec node_modules/.bin/prettier --tab-width 4 --print-width 100 --trailing-comma es5 --write {} +",
+        "prettier": "find src -name '*.ts' -exec node_modules/.bin/prettier --tab-width 4 --print-width 100 --trailing-comma es5 --list-different {} +",
         "tslint:fix": "tslint --fix 'src/**/*.ts'",
         "tslint": "tslint 'src/**/*.ts'",
         "tsc": "tsc",
         "jest": "jest",
         "test": "npm-run-all tsc -p tslint prettier jest"
     },
-    "version": "0.0.1",
-    "files": ["lib/"],
+    "version": "0.0.2",
+    "files": [
+        "lib/"
+    ],
     "main": "lib/index.js",
     "license": "MIT",
     "devDependencies": {
