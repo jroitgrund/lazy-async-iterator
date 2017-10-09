@@ -2,31 +2,34 @@
 
 [![CircleCI](https://circleci.com/gh/jroitgrund/lazy-async-iterator.svg?style=svg)](https://circleci.com/gh/jroitgrund/lazy-async-iterator)
 
-Turn a paginated async call into an infinite lazy stream of results:
+Turn a paginated async call into an infinite lazy result iterator.
 
 ```ts
-function getPosts(after?: number) {
-    const start = after || 0;
+async function getHmmmPosts(token?: number) {
+    const url = `https://reddit.com/r/hmmm/hot.json${token ? `?after=${token}` : ""}`;
+    const page = await (await fetch(url)).json();
+    const posts = page.data.children;
+    const nextToken = page.data.after;
     return Promise.resolve({
-        after: start + 1,
-        posts: [start * 10, start * 11],
+        nextToken,
+        posts,
     });
 }
 
-const postsAsyncFetcher = {
-    get: getPosts,
+const hmmmPostsAsyncFetcher = {
+    get: getHmmmPosts,
     getResults: (page: IPage) => page.posts,
-    getToken: (page: IPage) => page.after,
+    getToken: (page: IPage) => page.nextToken,
 };
 
 describe("getInfiniteStream", () => {
     it("returns an infinite stream", async () => {
-        const iterator = getInfiniteStream(postsAsyncFetcher)[Symbol.iterator]();
-        const results: number[] = [];
-        for (let i = 0; i < 10; i++) {
-            results.push((await iterator.next()).value);
+        const iterator = getInfiniteStream(hmmmPostsAsyncFetcher)[Symbol.iterator]();
+        const titles: string[] = [];
+        for (let i = 0; i < 1000; i++) {
+            titles.push((await iterator.next()).value.data.title);
         }
-        expect(results).toEqual([0, 0, 10, 11, 20, 22, 30, 33, 40, 44]);
+        expect(titles).toEqual(_.fill(Array(100), "hmmm"););
     });
 });
 ```
