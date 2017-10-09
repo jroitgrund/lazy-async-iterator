@@ -24,10 +24,12 @@ const hmmmPostsAsyncFetcher = {
 
 describe("getInfiniteStream", () => {
     it("returns an infinite stream", async () => {
-        const iterator = getInfiniteStream(hmmmPostsAsyncFetcher)[Symbol.iterator]();
-        const titles: string[] = [];
-        for (let i = 0; i < 1000; i++) {
-            titles.push((await iterator.next()).value.data.title);
+        const results = [];
+        for await (const result of getInfiniteStream(hmmmPostsAsyncFetcher)) {
+            results.push(result.data.title);
+            if (results.length === 100) {
+                break;
+            }
         }
         expect(titles).toEqual(_.fill(Array(100), "hmmm"););
     });
